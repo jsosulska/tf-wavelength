@@ -1,6 +1,6 @@
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
 resource "aws_security_group" "wavelength" {
-  vpc_id = aws_vpc.wavelength.id
+  vpc_id = local.vpc_id
 
   tags = var.tags
 }
@@ -13,9 +13,7 @@ resource "aws_security_group_rule" "wavelength_ingress" {
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = [aws_security_group.wavelength.id]
-
-  tags = var.tags
+  security_group_id = aws_security_group.wavelength.id
 }
 
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
@@ -25,7 +23,5 @@ resource "aws_security_group_rule" "wavelength_egress" {
   to_port           = 0
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = [aws_security_group.wavelength.id]
-
-  tags = var.tags
+  security_group_id = aws_security_group.wavelength.id
 }

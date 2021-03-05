@@ -1,21 +1,22 @@
-## Create, Set Up, Associate
-# Create the Route Table for Wavelength Zone
-resource "aws_route_table" "WLZ_route_table" {
-  vpc_id = aws_vpc.tf-vpc.id
-  tags = {
-    Name = "Wavelength Zone Route Table"
-  }
+# create a Route Table for the Wavelength Zone (WLZ)
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table
+resource "aws_route_table" "wavelength_zone" {
+  vpc_id = local.vpc_id
+
+  tags = var.tags
 }
 
-# Setup WLZ Route Table
-resource "aws_route" "WLZ_route" {
-  route_table_id         = aws_route_table.WLZ_route_table.id
+# set up Wavelength Zone Route
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route
+resource "aws_route" "wavelength_zone" {
+  route_table_id         = aws_route_table.wavelength_zone.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_ec2_carrier_gateway.carrier_gateway.id
+  gateway_id             = aws_ec2_carrier_gateway.wavelength.id
 }
 
-# Associate Route Table with subnet for WLZ
-#resource "aws_route_table_association" "WLZ_route_association" {
-#    subnet_id           = aws_subnet.wl_subnet.id
-#    route_table_id      = aws_route_table.WLZ_route_table.id
-#}
+# associate Route Table with Subnet for WLZ
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association
+resource "aws_route_table_association" "wavelength" {
+  subnet_id      = aws_subnet.wl_subnet.id
+  route_table_id = aws_route_table.wavelength_zone.id
+}
