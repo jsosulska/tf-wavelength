@@ -1,69 +1,70 @@
-variable "create_vpc" {
-  type        = bool
-  default     = false
-  description = "Toggle to enable / disable VPC creation"
+# TODO: Make Multi-az
+
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc
+resource "aws_vpc" "managed" {
+  count = var.create_vpc == true ? 1 : 0
+
+  cidr_block           = "15.0.0.0/16"
+  instance_tenancy     = "default"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
+  tags = var.tags
 }
 
-# Todo: Make Multi-az
-# Needs for_each
-variable "availability_zone" {
-  type        = list(string)
-  description = "Toggle to enable / disable VPC creation"
-}
-
-# create the vpc
-resource "aws_vpc" "vpc" {
-    count = var.create_vpc == true ? 1 : 0
-    cidr_block              = "15.0.0.0/16"
-    instance_tenancy        = "default"
-    enable_dns_support      = true
-    enable_dns_hostnames    = true
-    tags = {
-        Name = "tf-vpc"
-    }
-}
-
-# create the Region subnet
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet
 resource "aws_subnet" "region_subnet" {
-    count = var.create_vpc == true ? 1 : 0
-    vpc_id              = aws_vpc.vpc.id
-    cidr_block          = "15.0.1.0/24"
-    availability_zone   = var.availability_zone
-    tags = {
-        Name = "tf-subnet"
-    }
+  count = var.create_vpc == true ? 1 : 0
+
+  vpc_id = aws_vpc.managed[0].id
+
+  # TODO change into variable
+  cidr_block        = "15.0.1.0/24"
+  availability_zone = var.availability_zone
+
+  tags = var.tags
 }
 
-# Create Internet Gateway
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway
 resource "aws_internet_gateway" "internet_gw" {
-    count = var.create_vpc == true ? 1 : 0
-    vpc_id              = aws_vpc.vpc.id
-    tags = {
-        Name = "Internet-Gateway"
-    }
+  count = var.create_vpc == true ? 1 : 0
+
+  vpc_id = aws_vpc.managed[0].id
+
+  # TODO change into variable
+  tags = {
+    Name = "Internet-Gateway"
+  }
 }
 
 ## Create, Set Up, Associate
-# Create the Route Table for Region
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table
 resource "aws_route_table" "region_route_table" {
-    count = var.create_vpc == true ? 1 : 0
-    vpc_id              = aws_vpc.vpc.id
-    tags = {
-        Name = "Region Route Table"
-    }
+  count = var.create_vpc == true ? 1 : 0
+
+  vpc_id = aws_vpc.managed[0].id
+
+  # TODO change into variable
+  tags = {
+    Name = "Region Route Table"
+  }
 }
 
 # Setup Region Route Table
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route
 resource "aws_route" "region_route" {
-    count = var.create_vpc == true ? 1 : 0
-    route_table_id          = aws_route_table.region_route_table.id
-    destination_cidr_block  = "0.0.0.0/0"
-    gateway_id              = aws_internet_gateway.internet_gw.id
+  count = var.create_vpc == true ? 1 : 0
+
+  route_table_id         = aws_route_table.region_route_table[0].id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.internet_gw[0].id
 }
 
 # Associate Route Table with subnet
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association
 resource "aws_route_table_association" "region_route_association" {
-    count = var.create_vpc == true ? 1 : 0
-    subnet_id           = aws_subnet.region_subnet.id
-    route_table_id      = aws_route_table.region_route_table.id
+  count = var.create_vpc == true ? 1 : 0
+
+  subnet_id      = aws_subnet.region_subnet[0].id
+  route_table_id = aws_route_table.region_route_table[0].id
 }
