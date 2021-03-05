@@ -10,6 +10,12 @@ variable "create_vpc" {
   description = "Toggle to enable / disable VPC creation"
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "The id of the specific pre-existing VPC to retrieve."
+  default     = ""
+}
+
 variable "tags" {
   type        = map(any)
   description = "AWS Tags"
