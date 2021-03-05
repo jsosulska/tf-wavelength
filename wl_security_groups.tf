@@ -1,23 +1,31 @@
-# These are not best practice, this is a demo.
-resource "aws_security_group" "wl_security_group" {
-  vpc_id      = aws_vpc.vpc.id
-  name        = "tf WLZ Security Group"
-  description = "Security group for Wavelength zone created by Terraform"
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+resource "aws_security_group" "wavelength" {
+  vpc_id      = aws_vpc.wavelength.id
 
-  ingress {
-    security_groups = [aws_security_group.tf_security_group.id]
-    protocol        = "tcp"
-    from_port       = 22
-    to_port         = 22
-  }
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  tags = {
-    Name = "Terraform Wavelength Zone Security Group"
-  }
+  tags = var.tags
+}
 
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
+# NOTE: this is decidedly NOT a best-practice!
+resource "aws_security_group_rule" "wavelength_ingress" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = [aws_security_group.wavelength.id]
+
+  tags = var.tags
+}
+
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
+resource "aws_security_group_rule" "wavelength_egress" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = [aws_security_group.wavelength.id]
+
+  tags = var.tags
 }
