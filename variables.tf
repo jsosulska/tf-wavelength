@@ -1,3 +1,9 @@
+variable "region" {
+  type        = string
+  default     = "us-east-1"
+  description = "This is the AWS region."
+}
+
 variable "create_vpc" {
   type        = bool
   default     = false
