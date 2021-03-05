@@ -44,8 +44,8 @@ data "aws_availability_zones" "available" {
 
 ```
 module "wavelength_zone" {
-  source = "./modules/vpc"
-  create_vpc = false
+  source            = "./modules/vpc"
+  create_vpc        = false
   availability_zone = "us-east-1a"
 }
 ```
