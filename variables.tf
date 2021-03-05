@@ -5,10 +5,10 @@ variable "create_vpc" {
 }
 
 variable "tags" {
-  default     = map(any)
+  type        = map(any)
   description = "AWS Tags"
 
-  default {
+  default = {
     Name = "Wavelength"
   }
 }

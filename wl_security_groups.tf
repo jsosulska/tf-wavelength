@@ -1,6 +1,6 @@
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
 resource "aws_security_group" "wavelength" {
-  vpc_id      = aws_vpc.wavelength.id
+  vpc_id = aws_vpc.wavelength.id
 
   tags = var.tags
 }
