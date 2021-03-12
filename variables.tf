@@ -16,11 +16,27 @@ variable "vpc_id" {
   default     = ""
 }
 
-variable "tags" {
+variable "tags_default" {
   type        = map(any)
-  description = "AWS Tags"
+  description = "default Tags"
 
   default = {
-    Name = "Wavelength"
+    Purpose          = "Wavelength"
+    TerraformManaged = true
   }
 }
+
+variable "tags_internet_gateway" {
+  type        = map(any)
+  description = "default Tags"
+
+  default = {
+    Name = "Internet-Gateway"
+  }
+}
+
+locals {
+  # see https://www.terraform.io/docs/language/functions/merge.html
+  igw_tags = merge(var.tags_internet_gateway, var.tags_default)
+}
+

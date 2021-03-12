@@ -4,11 +4,10 @@ resource "aws_security_group" "managed_wlz" {
 
   vpc_id = aws_vpc.managed[0].id
 
-  tags = var.tags
+  tags = local.tags_securitygroup_wlz
 }
 
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
-# NOTE: this is decidedly NOT a best-practice!
 resource "aws_security_group_rule" "managed_wlz_ingress" {
   count = var.create_vpc == true ? 1 : 0
 
@@ -16,7 +15,7 @@ resource "aws_security_group_rule" "managed_wlz_ingress" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = var.wlz_ingress_cidr_block
   security_group_id = aws_security_group.managed_wlz[0].id
 }
 

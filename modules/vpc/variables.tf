@@ -16,17 +16,63 @@ variable "create_vpc" {
 
 variable "tags" {
   type        = map(any)
-  description = "AWS Tags"
+  description = "TODO"
 
   default = {
-    Name = "Wavelength"
+    purpose          = "Wavelength"
+    terraformManaged = true
   }
 }
 
-//local {
-//  tags = var.tags != "" ? var.tags : var.predefined_tags
-//}
-//
-//tag_prefix = "Wavelength 42"
-//
-//name = "${trim(var.tag_prefix)} Internet GW"
+variable "tags_managed_vpc" {
+  type        = map(any)
+  description = "TODO"
+
+  default = {
+    type = "vpc"
+  }
+}
+
+variable "tags_region_subnet" {
+  type        = map(any)
+  description = "TODO"
+
+  default = {
+    type = "subnet"
+  }
+}
+
+variable "tags_internet_gw" {
+  type        = map(any)
+  description = "TODO"
+
+  default = {
+    type = "igw"
+  }
+}
+
+variable "tags_region_route_table" {
+  type        = map(any)
+  description = "TODO"
+
+  default = {
+    type = "Region Route Table"
+  }
+}
+
+variable "tags_securitygroup_wlz" {
+  type        = map(any)
+  description = "TODO"
+
+  default = {
+    type = "Security Group"
+  }
+}
+
+locals {
+  tags_managed_vpc        = merge(var.tags, var.tags_managed_vpc)
+  tags_region_subnet      = merge(var.tags, var.tags_region_subnet)
+  tags_internet_gw        = merge(var.tags, var.tags_internet_gw)
+  tags_region_route_table = merge(var.tags, var.tags_region_route_table)
+  tags_securitygroup_wlz  = merge(var.tags, var.tags_securitygroup_wlz)
+}

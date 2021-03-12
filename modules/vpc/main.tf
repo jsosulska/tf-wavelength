@@ -9,7 +9,7 @@ resource "aws_vpc" "managed" {
   enable_dns_support   = true
   enable_dns_hostnames = true
 
-  tags = var.tags
+  tags = local.tags_managed_vpc
 }
 
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet
@@ -22,7 +22,7 @@ resource "aws_subnet" "region_subnet" {
   cidr_block        = "15.0.1.0/24"
   availability_zone = var.availability_zone
 
-  tags = var.tags
+  tags = local.tags_region_subnet
 }
 
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway
@@ -31,10 +31,7 @@ resource "aws_internet_gateway" "internet_gw" {
 
   vpc_id = aws_vpc.managed[0].id
 
-  # TODO change into variable
-  tags = {
-    Name = "Internet-Gateway"
-  }
+  tags = local.tags_internet_gw
 }
 
 ## Create, Set Up, Associate
@@ -44,10 +41,7 @@ resource "aws_route_table" "region_route_table" {
 
   vpc_id = aws_vpc.managed[0].id
 
-  # TODO change into variable
-  tags = {
-    Name = "Region Route Table"
-  }
+  tags = local.tags_region_route_table
 }
 
 # Setup Region Route Table
