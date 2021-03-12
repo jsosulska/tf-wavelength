@@ -1,9 +1,11 @@
+/*
+Commenting this file out as it will not work until the issues in the README.md have been resolved.
 # create a Route Table for the Wavelength Zone (WLZ)
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table
 resource "aws_route_table" "wavelength_zone" {
   vpc_id = local.vpc_id
 
-  tags = var.tags
+  tags = local.tags_wlz_route_table
 }
 
 # set up Wavelength Zone Route
@@ -20,3 +22,4 @@ resource "aws_route_table_association" "wavelength" {
   subnet_id      = aws_subnet.wl_subnet.id
   route_table_id = aws_route_table.wavelength_zone.id
 }
+*/

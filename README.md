@@ -29,7 +29,7 @@ data "aws_availability_zones" "available" {
  Open)
 
 - The following [lab](https://www.eventbox.dev/published/lesson/wavelength-v2/prerequisites.html) covers the intent of the MVP. We want to achieve:
-  - One Region with Multiple local and wavelength availability zones.
+  - One Region with Multiple region-based and wavelength availability zones.
   - Needed supporting VPC infrastructure (optional)
   - AKS cluster with
     - control plane in local az
@@ -38,7 +38,7 @@ data "aws_availability_zones" "available" {
 
 ## Warnings
 
-- wl_routetables.tf is commented out until the issues above are fixed.
+- [wl_route_tables.tf](wl_route_tables.tf) is commented out until the issues above are fixed.
 
 ## Module
 
