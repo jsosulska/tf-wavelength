@@ -1,16 +1,16 @@
 variable "region" {
   type        = string
-  description = "This is the AWS region."
+  description = "The AWS Region for this VPC to be launched in"
 }
 
 variable "availability_zone" {
   type        = string # list(string)
-  description = "TODO"
+  description = "The availability zone(s) used by this VPC module"
 }
 
 variable "create_vpc" {
   type        = bool
-  description = "Toggle to enable / disable VPC creation"
+  description = "Toggle to enable / disable this module creating a VPC"
   default     = false
 }
 
@@ -36,7 +36,7 @@ variable "wlz_ingress_cidr_block" {
 
 variable "tags" {
   type        = map(any)
-  description = "TODO"
+  description = "Default tags for all resources created by the VPC module inside the wavelength module."
 
   default = {
     purpose          = "Wavelength"
@@ -46,7 +46,7 @@ variable "tags" {
 
 variable "tags_managed_vpc" {
   type        = map(any)
-  description = "TODO"
+  description = "Additional tags for the module created VPC"
 
   default = {
     type = "vpc"
@@ -55,7 +55,7 @@ variable "tags_managed_vpc" {
 
 variable "tags_region_subnet" {
   type        = map(any)
-  description = "TODO"
+  description = "Additional tags for the module created subnet"
 
   default = {
     type = "subnet"
@@ -64,7 +64,7 @@ variable "tags_region_subnet" {
 
 variable "tags_internet_gw" {
   type        = map(any)
-  description = "TODO"
+  description = "Additional tags for the module created internet gateway"
 
   default = {
     type = "igw"
@@ -73,19 +73,19 @@ variable "tags_internet_gw" {
 
 variable "tags_region_route_table" {
   type        = map(any)
-  description = "TODO"
+  description = "Additional tags for the module created route table"
 
   default = {
-    type = "Region Route Table"
+    type = "routeTable"
   }
 }
 
 variable "tags_securitygroup_wlz" {
   type        = map(any)
-  description = "TODO"
+  description = "Additional tags for the module created ingress security group"
 
   default = {
-    type = "Security Group"
+    type = "securityGroup"
   }
 }
 
