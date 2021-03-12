@@ -4,7 +4,7 @@
 resource "aws_vpc" "managed" {
   count = var.create_vpc == true ? 1 : 0
 
-  cidr_block           = "15.0.0.0/16"
+  cidr_block           = var.vpc_cidr_block
   instance_tenancy     = "default"
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -16,10 +16,8 @@ resource "aws_vpc" "managed" {
 resource "aws_subnet" "region_subnet" {
   count = var.create_vpc == true ? 1 : 0
 
-  vpc_id = aws_vpc.managed[0].id
-
-  # TODO change into variable
-  cidr_block        = "15.0.1.0/24"
+  vpc_id            = aws_vpc.managed[0].id
+  cidr_block        = var.subnet_cidr_block
   availability_zone = var.availability_zone
 
   tags = local.tags_region_subnet

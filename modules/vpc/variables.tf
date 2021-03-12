@@ -14,6 +14,26 @@ variable "create_vpc" {
   default     = false
 }
 
+variable "vpc_cidr_block" {
+  type        = string
+  description = "The CIDR block for the VPC"
+  default     = "10.0.0.0/22"
+}
+
+variable "subnet_cidr_block" {
+  type        = string
+  description = "The CIDR block for the Subnet"
+  default     = "10.0.1.0/24"
+}
+
+variable "wlz_ingress_cidr_block" {
+  type        = list(string)
+  description = "List of CIDR blocks for SSH access"
+
+  # NOTE: this is decidedly NOT a best-practice!
+  default = ["0.0.0.0/0"]
+}
+
 variable "tags" {
   type        = map(any)
   description = "TODO"
