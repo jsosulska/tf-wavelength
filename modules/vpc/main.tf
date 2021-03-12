@@ -1,4 +1,4 @@
-# TODO: Make Multi-az
+# TODO: make multi-AZ
 
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc
 resource "aws_vpc" "managed" {
