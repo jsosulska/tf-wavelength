@@ -77,7 +77,7 @@ variable "tags_region_route_table" {
 
 variable "tags_region_securitygroup" {
   type        = map(any)
-  description = "Additional tags for the module created ingress security group"
+  description = "Additional tags for the module created security group"
 
   default = {
     type = "securityGroup"
