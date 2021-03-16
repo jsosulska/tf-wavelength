@@ -94,9 +94,9 @@ variable "tags_region_subnet" {
 }
 
 locals {
-  tags_internet_gw        = merge(var.tags, var.tags_internet_gw)
-  tags_managed_vpc        = merge(var.tags, var.tags_managed_vpc)
-  tags_region_route_table = merge(var.tags, var.tags_region_route_table)
-  tags_region_securitygroup  = merge(var.tags, var.tags_region_securitygroup)
-  tags_region_subnet      = merge(var.tags, var.tags_region_subnet)
+  tags_internet_gw          = merge(var.tags, var.tags_internet_gw)
+  tags_managed_vpc          = merge(var.tags, var.tags_managed_vpc)
+  tags_region_route_table   = merge(var.tags, var.tags_region_route_table)
+  tags_region_securitygroup = merge(var.tags, var.tags_region_securitygroup)
+  tags_region_subnet        = merge(var.tags, var.tags_region_subnet)
 }

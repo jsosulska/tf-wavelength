@@ -70,7 +70,7 @@ variable "tags_wlz_subnet" {
 
 locals {
   # see https://www.terraform.io/docs/language/functions/merge.html
-  tags_carrier_gw        = merge(var.tags_wavelength, var.tags_carrier_gw)
+  tags_carrier_gw = merge(var.tags_wavelength, var.tags_carrier_gw)
   //tags_wlz_route_table   = merge(var.tags_wavelength, var.tags_wlz_route_table)
   tags_wlz_securitygroup = merge(var.tags_wavelength, var.tags_wlz_securitygroup)
   tags_wlz_subnet        = merge(var.tags_wavelength, var.tags_wlz_subnet)
