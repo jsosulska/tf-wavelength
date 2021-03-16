@@ -1,5 +1,5 @@
 terraform {
-  required_version = "0.14.8"
+  required_version = "0.13.6"
 
   required_providers {
     # see https://registry.terraform.io/providers/hashicorp/aws/latest
