@@ -1,3 +1,9 @@
+variable "profile" {
+  type        = string
+  description = "AWS Credentials Profile to use"
+  default     = "default"
+}
+
 variable "region" {
   type        = string
   default     = "us-east-1"
