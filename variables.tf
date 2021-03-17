@@ -19,7 +19,7 @@ variable "create_vpc" {
 variable "wlz_cidr_block" {
   type        = string
   description = "The CIDR block for the Wavelength Zone"
-  default     = "10.1.0.0/24"
+  default     = "10.1.3.0/24"
 }
 
 variable "vpc_id" {
