@@ -49,7 +49,7 @@ variable "tags" {
 }
 
 variable "tags_internet_gw" {
-  type        = map(any)
+  type        = map(string)
   description = "Additional tags for the module created internet gateway"
 
   default = {
@@ -58,7 +58,7 @@ variable "tags_internet_gw" {
 }
 
 variable "tags_managed_vpc" {
-  type        = map(any)
+  type        = map(string)
   description = "Additional tags for the module created VPC"
 
   default = {
@@ -67,7 +67,7 @@ variable "tags_managed_vpc" {
 }
 
 variable "tags_region_route_table" {
-  type        = map(any)
+  type        = map(string)
   description = "Additional tags for the module created route table"
 
   default = {
