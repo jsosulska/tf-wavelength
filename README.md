@@ -1,6 +1,7 @@
 # wavelength-tf-demo
 
 A repo to manage wavelength zones in terraform.
+
 ## Requirements
 
 - You will need to request access to the Wavelength service through AWS. This process can take several days.
@@ -44,7 +45,7 @@ data "aws_availability_zones" "available" {
 
 ## Module
 
-```
+```hcl
 module "wavelength_zone" {
   source            = "./modules/vpc"
   create_vpc        = false
@@ -54,12 +55,12 @@ module "wavelength_zone" {
 
 ## Required inputs
 
-```
+```hcl
 Required inputs
 ```
 
 ## Outputs
 
-```
-Required outputs
+```hcl
+outputs
 ```
