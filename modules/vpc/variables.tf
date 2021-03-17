@@ -39,7 +39,7 @@ variable "wlz_ingress_cidr_block" {
 }
 
 variable "tags" {
-  type        = map(any)
+  type        = map(string)
   description = "Default tags for all resources created by the VPC module inside the wavelength module."
 
   default = {
@@ -76,7 +76,7 @@ variable "tags_region_route_table" {
 }
 
 variable "tags_region_securitygroup" {
-  type        = map(any)
+  type        = map(string)
   description = "Additional tags for the module created security group"
 
   default = {
@@ -85,7 +85,7 @@ variable "tags_region_securitygroup" {
 }
 
 variable "tags_region_subnet" {
-  type        = map(any)
+  type        = map(string)
   description = "Additional tags for the module created subnet"
 
   default = {
