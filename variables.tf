@@ -29,7 +29,7 @@ variable "vpc_id" {
 }
 
 variable "tags_wavelength" {
-  type        = map(any)
+  type        = map(string)
   description = "default Tags"
 
   default = {
@@ -39,7 +39,7 @@ variable "tags_wavelength" {
 }
 
 variable "tags_carrier_gw" {
-  type        = map(any)
+  type        = map(string)
   description = "Carrier Gateway Tags"
 
   default = {
@@ -48,7 +48,7 @@ variable "tags_carrier_gw" {
 }
 
 variable "tags_wlz_route_table" {
-  type        = map(any)
+  type        = map(string)
   description = "Wavelength Zone Route Table Tags"
 
   default = {
@@ -57,7 +57,7 @@ variable "tags_wlz_route_table" {
 }
 
 variable "tags_wlz_securitygroup" {
-  type        = map(any)
+  type        = map(string)
   description = "Wavelength Zone security group Tags"
 
   default = {
@@ -66,7 +66,7 @@ variable "tags_wlz_securitygroup" {
 }
 
 variable "tags_wlz_subnet" {
-  type        = map(any)
+  type        = map(string)
   description = "Additional tags for the module created subnet"
 
   default = {
