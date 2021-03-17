@@ -17,7 +17,10 @@ module "vpc" {
 
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc
 data "aws_vpc" "existing_vpc" {
-  id = var.vpc_id
+  filter {
+    name   = "cidr"
+    value = "10.1.0.0/16"
+  }
 }
 
 locals {
