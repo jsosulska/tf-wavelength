@@ -1,6 +1,6 @@
 # wavelength-tf-demo
 
-A repo to manage wavelength zones in Terraform. This module has an
+A repo to manage AWS Wavelength Zones in Terraform. This module has an
 intentionally small scope, but comes with several features. The following
 [lab](https://www.eventbox.dev/published/lesson/wavelength-v2/prerequisites.html)
 covers the intent of the MVP.
@@ -48,7 +48,7 @@ We want to achieve:
 ## Module
 
 ```hcl
-module "wavelength" {
+module "terraform-aws-wavelength-zone" {
   source     = "github.com/jsosulska/tf-wavelength"
   create_vpc = false
 }

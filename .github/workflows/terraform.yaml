@@ -14,8 +14,7 @@ jobs:
     strategy:
       matrix:
         directory: [
-            "./",
-            "./modules/vpc"
+            "./"
         ]
     steps:
       - name: Checkout Repository
