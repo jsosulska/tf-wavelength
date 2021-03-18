@@ -1,0 +1,37 @@
+---
+
+name: "Code Quality: Terraform"
+
+on:
+  pull_request:
+
+jobs:
+  terraform:
+    name: terraform
+    env:
+      TF_VAR_region: us-east-1
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory: [
+            "./"
+        ]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: "0.13.6"
+
+      - name: Run `terraform fmt`
+        run: terraform fmt -diff -check -no-color -recursive "${{ matrix.directory }}"
+
+      - name: Run `terraform init`
+        run: terraform init -backend=false -get=true -get-plugins=true "${{ matrix.directory }}"
+
+      - name: Run `terraform validate`
+        run: terraform validate -no-color "${{ matrix.directory }}"
