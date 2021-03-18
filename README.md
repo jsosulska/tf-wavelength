@@ -1,23 +1,33 @@
 # wavelength-tf-demo
 
-A repo to manage wavelength zones in terraform.
+A repo to manage AWS Wavelength Zones in Terraform. This module has an
+intentionally small scope, but comes with several features. The following
+[lab](https://www.eventbox.dev/published/lesson/wavelength-v2/prerequisites.html)
+covers the intent of the MVP.
+We want to achieve:
+
+- [x] One Region with Multiple region-based AZ's and a wavelength availability zone.
+- [x] Needed supporting VPC infrastructure
+- EKS cluster with
+  - control plane in local az
+  - worker nodes across local and wavelength az
+- Consul
 
 ## Requirements
 
-- You will need to request access to the Wavelength service through AWS. This process can take several days.
-- When adding Wavelength zones, be sure to use the following filter in your future Terraform for Availability zones.
+- Request access to Wavelength through the AWS Console. This process can take several days.
+  - Currently, only available in the [following regions](https://aws.amazon.com/wavelength/features/)
+- When adding Wavelength zones, be sure to use the following filter in your future Terraform for standard Availability zones for a given region.
 
-### Currently, only available in the [following regions](https://aws.amazon.com/wavelength/features/)
-
-```hcl
-data "aws_availability_zones" "available" {
-  state = "available"
-  filter {
-    name   = "opt-in-status"
-    values = ["opt-in-not-required"]
+  ```hcl
+  data "aws_availability_zones" "available" {
+    state = "available"
+    filter {
+      name   = "opt-in-status"
+      values = ["opt-in-not-required"]
+    }
   }
-}
-```
+  ```
 
 - Currently there a blocking issues that stop wavelength from being deployed completely with Terraform.
   - [Provider-Top Level](https://github.com/hashicorp/terraform-provider-aws/issues/14518)
@@ -31,36 +41,21 @@ data "aws_availability_zones" "available" {
     - [d/aws_route_table: 'destination_prefix_list_id' attribute set for managed prefix list destinations #17347](https://github.com/hashicorp/terraform-provider-aws/pull/17347)
  Open)
 
-- The following [lab](https://www.eventbox.dev/published/lesson/wavelength-v2/prerequisites.html) covers the intent of the MVP. We want to achieve:
-  - One Region with Multiple region-based and wavelength availability zones.
-  - Needed supporting VPC infrastructure (optional)
-  - AKS cluster with
-    - control plane in local az
-    - worker nodes across local and wavelength az
-  - Consul
-
 ## Warnings
 
-- [wl_route_tables.tf](wl_route_tables.tf) is commented out until the issues above are fixed.
+- [wl_route_tables.tf](wl_route_tables.tf) is commented out until the issues above are fixed. You will need to create these manual via scripts or the console.
 
 ## Module
 
 ```hcl
-module "wavelength_zone" {
-  source            = "./modules/vpc"
-  create_vpc        = false
-  availability_zone = "us-east-1a"
+module "terraform-aws-wavelength-zone" {
+  source     = "github.com/jsosulska/tf-wavelength"
+  create_vpc = false
 }
 ```
 
 ## Required inputs
 
 ```hcl
-Required inputs
-```
-
-## Outputs
-
-```hcl
-outputs
+None
 ```

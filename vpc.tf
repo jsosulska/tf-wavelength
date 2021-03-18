@@ -1,23 +1,37 @@
-/* 
-To use your existing VPC in the region passed to your AWS provider
-configuration, comment out the module definition (L#7-L#13) and local
-var (L#22) below, and uncomment anything with //.
-*/
+data "aws_availability_zones" "wlz" {
+  filter {
+    name   = "group-name"
+    values = [var.region]
+  }
+}
+
+module "vpc_wlz" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "2.77.0"
+
+  create_vpc      = var.create_vpc
+  name            = "vpc_wlz"
+  cidr            = "10.1.0.0/16"
+  azs             = data.aws_availability_zones.wlz.names
+  private_subnets = ["10.1.1.0/24", "10.1.2.0/24", "10.1.3.0/24"]
+  public_subnets  = ["10.1.101.0/24", "10.1.102.0/24", "10.1.103.0/24"]
+
+  enable_nat_gateway   = true
+  enable_dns_hostnames = true
+
+  tags = var.tags_wavelength
+}
 
 /*
-module "vpc" {
-  count = var.create_vpc == true ? 1 : 0
-  source = "./modules/vpc"
-
-  create_vpc        = false
-  region            = var.region
-  availability_zone = "us-east-1a"
-}
+You can remove the above section from this module if you are launching VPCs through other modules. If the above module is used, the CIDR created by the module above is used to filter the data below.
 */
 
 # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc
 data "aws_vpc" "existing_vpc" {
-  id = var.vpc_id
+  filter {
+    name   = "cidr"
+    values = ["10.1.0.0/16"]
+  }
 }
 
 locals {
