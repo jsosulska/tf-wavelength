@@ -21,7 +21,7 @@ variable "tags_carrier_gw" {
   description = "Carrier Gateway Tags"
 
   default = {
-    Name = "carrierGateway"
+    name = "carrierGateway"
   }
 }
 
@@ -40,7 +40,7 @@ variable "tags_wlz_route_table" {
   description = "Wavelength Zone Route Table Tags"
 
   default = {
-    Name = "routeTable"
+    name = "routeTable"
   }
 }
 
@@ -49,7 +49,7 @@ variable "tags_wlz_securitygroup" {
   description = "Wavelength Zone security group Tags"
 
   default = {
-    Name = "wlzSecurityGroup"
+    name = "wlzSecurityGroup"
   }
 }
 
