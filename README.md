@@ -43,7 +43,31 @@ We want to achieve:
 
 ## Warnings
 
-- [wl_route_tables.tf](wl_route_tables.tf) is commented out until the issues above are fixed. You will need to create these manual via scripts or the console.
+- [wl_route_tables.tf](wl_route_tables.tf) is commented out until the issues above are fixed. You will need to create these manually
+via scripts or the console. This maps to lab #2, steps 3-5.
+
+### CLI Commands:
+
+In the meantime, after this module is ran, a the following CLI commands are needed to finish setting up the WLZ. 
+
+1. Create Custom Route Table (and export to a variable)
+  
+  ```shell
+  BOS_RT=$(aws ec2 create-route-table --vpc-id $VPC_ID  --tag-specifications 'ResourceType=route-table,Tags=[{Key=Name,Value=wl-bos-rt}]' --query 'RouteTable.RouteTableId' --output text)
+  ```
+
+1. Create Custom Route for Wavelength Zone
+
+  ```shell
+  aws ec2 create-route --route-table-id $BOS_RT --destination-cidr-block 0.0.0.0/0 --carrier-gateway-id $BOS_CGW
+  ```
+
+1. Associate the Route and Route Table for the Wavelength Zone
+
+  ```shell
+  aws ec2 associate-route-table --route-table-id $BOS_RT --subnet-id $BOS_SUBNET
+  ```
+
 
 ## Module
 
